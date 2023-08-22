@@ -135,7 +135,7 @@ func (kc *Cluster) canAccessNS(ctx context.Context, namespace string) bool {
 	review := auth.SelfSubjectRulesReview{Spec: auth.SelfSubjectRulesReviewSpec{Namespace: namespace}}
 	rr, err := authHandler.Create(ctx, &review, meta.CreateOptions{})
 	if err != nil {
-		dlog.Errorf(ctx, `unable to do "can-i --list" on namespace %s`, namespace)
+		dlog.Errorf(ctx, `unable to do "can-i --list" on namespace %s: %v`, namespace, err)
 	}
 	if rr.Status.Incomplete {
 		// Incomplete is most commonly encountered when an authorizer, such as an external authorizer, doesn't support rules evaluation.
